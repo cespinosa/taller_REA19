@@ -55,3 +55,13 @@ class part_err(particle_teo):
         t, x, y = np.genfromtxt('test.txt', comments='#', skip_header=1, delimiter=',', unpack=True)
         plt.scatter(terr,yerr)
         plt.plot(t, y)
+    def plot_fit(self):
+        terr, xerr, yerr = np.genfromtxt('test_err.txt', comments='#', skip_header=1, delimiter=',', unpack=True)
+        t, x, y = np.genfromtxt('test.txt', comments='#', skip_header=1, delimiter=',', unpack=True)
+        a,b,c = np.polyfit(terr, yerr, 2)
+        print(a,b,c)
+        t_fit = np.linspace(0, self.t_total,100)
+        fit = lambda t: a*t**2 + b*t+c
+        plt.plot(t_fit, fit(t_fit), 'g--')
+        plt.scatter(terr,yerr)
+        plt.plot(t, y)        
